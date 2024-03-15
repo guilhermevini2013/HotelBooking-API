@@ -3,6 +3,7 @@ package org.guilhermedev.hotelbooking.models.hotel;
 import jakarta.persistence.*;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Contact;
+import org.guilhermedev.hotelbooking.models.information.Image;
 import org.guilhermedev.hotelbooking.models.information.InformationHotel;
 
 import java.util.HashSet;
@@ -22,8 +23,8 @@ public class Hotel {
     private Address address;
     @Embedded
     private InformationHotel informationHotel;
-//    @Lob
-//    private Set<byte[]> images = new HashSet<>();
+    @OneToMany
+    private Set<Image> imagesHotel = new HashSet<>();
     @OneToMany
     private Set<Room> rooms = new HashSet<>();
 
