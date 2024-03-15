@@ -1,9 +1,6 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Address {
@@ -14,6 +11,8 @@ public class Address {
     private Integer streetNumber;
     private String city;
     private String district;
+    @Embedded
+    private Coordinate coordinate;
 
     public Address() {
     }

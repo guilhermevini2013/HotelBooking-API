@@ -12,8 +12,6 @@ public class Hotel {
     private Long id;
     private String name;
     private String description;
-    @Embedded
-    private Coordinate coordinate;
     private SizeType sizeHotel;
     @OneToOne(fetch = FetchType.LAZY)
     private Contact contact;
