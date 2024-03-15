@@ -1,9 +1,9 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Room {
@@ -11,6 +11,8 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double price;
+//    @Lob
+//    private Set<byte[]> imagesRoom = new HashSet<>();
     private SizeType sizeRoom;
 
     public Room() {

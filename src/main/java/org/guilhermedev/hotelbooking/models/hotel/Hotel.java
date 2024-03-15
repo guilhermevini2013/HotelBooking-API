@@ -1,6 +1,9 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.models.information.Address;
+import org.guilhermedev.hotelbooking.models.information.Contact;
+import org.guilhermedev.hotelbooking.models.information.InformationHotel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +20,10 @@ public class Hotel {
     private Contact contact;
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
-    @Lob
-    private Set<byte[]> images = new HashSet<>();
+    @Embedded
+    private InformationHotel informationHotel;
+//    @Lob
+//    private Set<byte[]> images = new HashSet<>();
     @OneToMany
     private Set<Room> rooms = new HashSet<>();
 
