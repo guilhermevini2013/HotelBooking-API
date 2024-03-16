@@ -5,7 +5,7 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class InformationHotel {
     private Integer totalBookings;
-    private Double reviews;
+    private Double totalEvaluations;
 
     public InformationHotel() {
     }
