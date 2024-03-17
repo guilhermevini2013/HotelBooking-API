@@ -13,7 +13,9 @@ public class Booking {
     private LocalDate initialDate;
     private LocalDate finalDate;
     private Double price;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Client client;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Hotel hotel;
 
     public Booking() {

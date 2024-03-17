@@ -1,6 +1,5 @@
 package org.guilhermedev.hotelbooking.models.user;
 
-import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -15,7 +14,7 @@ import java.util.*;
 public class Client extends User {
     private Date dateOfBirth;
     private String gender;
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     private List<Booking> bookings;
 
     private Client(String name, String email, String password, String identity, Set<RoleType> roles, Date dateOfBirth, String gender, Contact contact) {

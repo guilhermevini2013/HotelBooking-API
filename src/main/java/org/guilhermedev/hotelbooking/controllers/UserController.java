@@ -1,8 +1,8 @@
 package org.guilhermedev.hotelbooking.controllers;
 
-import org.guilhermedev.hotelbooking.dto.user.ClientReadDTO;
-import org.guilhermedev.hotelbooking.dto.user.ClientRegisterDTO;
-import org.guilhermedev.hotelbooking.services.UserService;
+import org.guilhermedev.hotelbooking.dto.user.UserReadDTO;
+import org.guilhermedev.hotelbooking.dto.user.UserRegisterDTO;
+import org.guilhermedev.hotelbooking.services.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<ClientReadDTO> register(@RequestBody ClientRegisterDTO userRegisterDTO, UriComponentsBuilder componentsBuilder) {
-        ClientReadDTO userRegister = userService.register(userRegisterDTO);
+    public ResponseEntity<UserReadDTO> register(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder componentsBuilder) {
+        UserReadDTO userRegister = userService.register(userRegisterDTO);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(userRegister.getId()).toUri();
         return ResponseEntity.created(uri).body(userRegister);
     }

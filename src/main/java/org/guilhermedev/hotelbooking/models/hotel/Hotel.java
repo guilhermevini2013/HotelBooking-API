@@ -1,6 +1,7 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.dto.hotel.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Commentary;
 import org.guilhermedev.hotelbooking.models.information.Contact;
@@ -32,6 +33,10 @@ public class Hotel {
     @OneToMany
     private List<Commentary> commentaries = new ArrayList<>();
 
+    public Hotel(HotelCreateDTO hotelDTO) {
+    }
+
     public Hotel() {
+
     }
 }
