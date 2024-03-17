@@ -1,4 +1,4 @@
-package org.guilhermedev.hotelbooking.dto.user;
+package org.guilhermedev.hotelbooking.dto.user.insert;
 
 import org.guilhermedev.hotelbooking.models.information.Contact;
 

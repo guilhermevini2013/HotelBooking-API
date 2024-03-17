@@ -1,7 +1,7 @@
 package org.guilhermedev.hotelbooking.services.user;
 
-import org.guilhermedev.hotelbooking.dto.user.UserReadDTO;
-import org.guilhermedev.hotelbooking.dto.user.UserRegisterDTO;
+import org.guilhermedev.hotelbooking.dto.user.insert.UserRegisterDTO;
+import org.guilhermedev.hotelbooking.dto.user.read.UserReadDTO;
 import org.guilhermedev.hotelbooking.models.user.RoleType;
 import org.guilhermedev.hotelbooking.models.user.User;
 import org.guilhermedev.hotelbooking.repositories.RoleRepository;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserStrategy {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserStrategy(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;

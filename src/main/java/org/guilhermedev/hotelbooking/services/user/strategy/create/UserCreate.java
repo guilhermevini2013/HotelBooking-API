@@ -1,6 +1,6 @@
 package org.guilhermedev.hotelbooking.services.user.strategy.create;
 
-import org.guilhermedev.hotelbooking.dto.user.UserRegisterDTO;
+import org.guilhermedev.hotelbooking.dto.user.insert.UserRegisterDTO;
 import org.guilhermedev.hotelbooking.models.user.RoleType;
 import org.guilhermedev.hotelbooking.models.user.User;
 import org.springframework.security.crypto.password.PasswordEncoder;

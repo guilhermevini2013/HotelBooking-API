@@ -14,6 +14,12 @@ import java.util.Set;
 
 @Entity
 public class Hotel {
+    @OneToMany
+    private final Set<Image> imagesHotel = new HashSet<>();
+    @OneToMany
+    private final Set<Room> rooms = new HashSet<>();
+    @OneToMany
+    private final List<Commentary> commentaries = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,12 +32,6 @@ public class Hotel {
     private Address address;
     @Embedded
     private InformationHotel informationHotel;
-    @OneToMany
-    private Set<Image> imagesHotel = new HashSet<>();
-    @OneToMany
-    private Set<Room> rooms = new HashSet<>();
-    @OneToMany
-    private List<Commentary> commentaries = new ArrayList<>();
 
     public Hotel(HotelCreateDTO hotelDTO) {
     }

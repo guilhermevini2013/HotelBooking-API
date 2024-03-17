@@ -3,7 +3,7 @@ package org.guilhermedev.hotelbooking.models.user;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import org.guilhermedev.hotelbooking.dto.user.ContactDTO;
+import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
 

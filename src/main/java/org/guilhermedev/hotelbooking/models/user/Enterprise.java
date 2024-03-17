@@ -4,7 +4,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
-import org.guilhermedev.hotelbooking.dto.user.ContactDTO;
+import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
