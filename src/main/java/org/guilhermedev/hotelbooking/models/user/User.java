@@ -1,13 +1,15 @@
 package org.guilhermedev.hotelbooking.models.user;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.models.information.Contact;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Type")
+public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     protected Long id;
@@ -17,9 +19,49 @@ public abstract class User {
     protected String password;
     @Column(unique = true)
     protected String identity;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    protected Contact contact;
     @OneToMany
-    protected Set<RoleType> roles = new HashSet<>();
+    protected Set<RoleType> roles;
+
+    protected User(String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.identity = identity;
+        this.contact = contact;
+        this.roles = roles;
+    }
 
     public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public Set<RoleType> getRoles() {
+        return roles;
     }
 }

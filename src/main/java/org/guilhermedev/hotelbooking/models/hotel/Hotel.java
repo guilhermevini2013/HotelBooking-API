@@ -1,7 +1,10 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
-import org.guilhermedev.hotelbooking.models.information.*;
+import org.guilhermedev.hotelbooking.models.information.Address;
+import org.guilhermedev.hotelbooking.models.information.Commentary;
+import org.guilhermedev.hotelbooking.models.information.Contact;
+import org.guilhermedev.hotelbooking.models.information.Image;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,9 +19,9 @@ public class Hotel {
     private String name;
     private String description;
     private SizeType sizeHotel;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contact contact;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Address address;
     @Embedded
     private InformationHotel informationHotel;

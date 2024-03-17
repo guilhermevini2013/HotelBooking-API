@@ -1,4 +1,4 @@
-package org.guilhermedev.hotelbooking.models.information;
+package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.Embeddable;
 
