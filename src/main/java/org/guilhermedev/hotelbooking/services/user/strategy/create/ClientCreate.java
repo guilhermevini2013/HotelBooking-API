@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class ClientCreateStrategy implements UserCreate {
+public class ClientCreate implements UserCreate {
     public User create(UserRegisterDTO clientRegisterDTO, RoleType roleType, PasswordEncoder passwordEncoder) {
         return new Client.Builder()
                 .email(clientRegisterDTO.email())

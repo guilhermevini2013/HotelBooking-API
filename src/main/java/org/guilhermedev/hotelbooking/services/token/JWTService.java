@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.validation.ValidationException;
-import org.guilhermedev.hotelbooking.models.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +17,12 @@ public class JWTService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(User user) {
+    public String generateToken(String credential) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("auth-hotelBooking")
-                    .withSubject(user.getEmail())
+                    .withSubject(credential)
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;

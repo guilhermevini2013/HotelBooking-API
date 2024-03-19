@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class EnterpriseCreateStrategy implements UserCreate {
+public class EnterpriseCreate implements UserCreate {
     public User create(UserRegisterDTO enterpriseRegisterDTO, RoleType roleType, PasswordEncoder passwordEncoder) {
         return new Enterprise.Builder()
-                .email(enterpriseRegisterDTO.email())
                 .contact(enterpriseRegisterDTO.contact())
                 .password(passwordEncoder.encode(enterpriseRegisterDTO.password()))
                 .identity(enterpriseRegisterDTO.identity())

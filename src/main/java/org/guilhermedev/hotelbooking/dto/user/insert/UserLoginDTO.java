@@ -1,5 +1,8 @@
 package org.guilhermedev.hotelbooking.dto.user.insert;
 
-public record UserLoginDTO(String email,
-                           String password) {
+import org.guilhermedev.hotelbooking.models.user.TypeUser;
+
+public record UserLoginDTO(String credential,
+                           String password,
+                           TypeUser typeUser) {
 }

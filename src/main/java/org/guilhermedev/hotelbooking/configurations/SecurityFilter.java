@@ -31,8 +31,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = recoverToken(request);
         if (token != null) {
-            String subjectEmail = jwtService.validateToken(token);
-            User userFound = userRepository.findByEmail(subjectEmail).orElseThrow(() -> new EntityNotFoundException("Email not found"));
+            String subjectCredential = jwtService.validateToken(token);
+            User userFound = userRepository.findByCredential(subjectCredential).orElseThrow(() -> new EntityNotFoundException("Credential not found"));
             var authenticated = UsernamePasswordAuthenticationToken.authenticated(userFound, null, userFound.getRoles());
             SecurityContextHolder.getContext().setAuthentication(authenticated);
         }
