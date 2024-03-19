@@ -24,7 +24,7 @@ public class Client extends User {
         this.bookings = new ArrayList<>();
     }
 
-    public Client() {
+    protected Client() {
 
     }
 
