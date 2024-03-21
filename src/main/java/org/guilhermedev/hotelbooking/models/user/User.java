@@ -24,7 +24,8 @@ public abstract class User implements UserDetails {
     @OneToMany
     protected Set<RoleType> roles;
 
-    protected User(String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
+    protected User(Long id, String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

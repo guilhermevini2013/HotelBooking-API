@@ -18,8 +18,8 @@ public class Enterprise extends User {
     @OneToOne(fetch = FetchType.LAZY)
     private Hotel hotel;
 
-    private Enterprise(String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
-        super(name, email, password, identity, contact, roles);
+    private Enterprise(Long id, String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
+        super(id, name, email, password, identity, contact, roles);
     }
 
     protected Enterprise() {
@@ -57,12 +57,18 @@ public class Enterprise extends User {
     }
 
     public static class Builder {
-        protected String name;
-        protected String email;
-        protected String password;
-        protected String identity;
-        protected Contact contact;
         protected Set<RoleType> roles;
+        private Long id;
+        private String name;
+        private String email;
+        private String password;
+        private String identity;
+        private Contact contact;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;
@@ -95,7 +101,7 @@ public class Enterprise extends User {
         }
 
         public Enterprise build() {
-            return new Enterprise(name, email, password, identity, contact, roles);
+            return new Enterprise(id,name, email, password, identity, contact, roles);
         }
     }
 

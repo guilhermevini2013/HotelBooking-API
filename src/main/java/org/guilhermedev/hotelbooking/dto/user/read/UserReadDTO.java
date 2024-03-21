@@ -12,11 +12,11 @@ public class UserReadDTO extends RepresentationModel<UserReadDTO> {
     private final String email;
     private final ContactDTO contact;
 
-    public UserReadDTO(User enterprise) {
-        this.id = enterprise.getId();
-        this.name = enterprise.getName();
-        this.email = enterprise.getEmail();
-        this.contact = new ContactDTO(enterprise.getContact());
+    public UserReadDTO(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.contact = new ContactDTO(user.getContact());
     }
 
     public Long getId() {

@@ -17,12 +17,13 @@ public class Client extends User {
     @OneToMany(mappedBy = "client")
     private List<Booking> bookings;
 
-    private Client(String name, String email, String password, String identity, Set<RoleType> roles, Date dateOfBirth, String gender, Contact contact) {
-        super(name, email, password, identity, contact, roles);
+    private Client(Long id, String name, String email, String password, String identity, Set<RoleType> roles, Date dateOfBirth, String gender, Contact contact) {
+        super(id, name, email, password, identity, contact, roles);
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.bookings = new ArrayList<>();
     }
+
 
     protected Client() {
 
@@ -76,6 +77,7 @@ public class Client extends User {
     }
 
     public static class Builder {
+        private Long id;
         private String name;
         private String email;
         private String password;
@@ -84,6 +86,11 @@ public class Client extends User {
         private Date dateOfBirth;
         private String gender;
         private Contact contact;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;
@@ -126,7 +133,7 @@ public class Client extends User {
         }
 
         public Client build() {
-            return new Client(name, email, password, identity, roles, dateOfBirth, gender, contact);
+            return new Client(id, name, email, password, identity, roles, dateOfBirth, gender, contact);
         }
     }
 }
