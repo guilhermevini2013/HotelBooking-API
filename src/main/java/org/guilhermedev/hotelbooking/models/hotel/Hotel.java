@@ -1,7 +1,6 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
-import org.guilhermedev.hotelbooking.dto.hotel.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Commentary;
 import org.guilhermedev.hotelbooking.models.information.Contact;
@@ -33,10 +32,61 @@ public class Hotel {
     @Embedded
     private InformationHotel informationHotel;
 
-    public Hotel(HotelCreateDTO hotelDTO) {
+    private Hotel(String name, String description, SizeType sizeHotel, Contact contact, Address address, InformationHotel informationHotel) {
+        this.name = name;
+        this.description = description;
+        this.sizeHotel = sizeHotel;
+        this.contact = contact;
+        this.address = address;
+        this.informationHotel = informationHotel;
     }
 
-    public Hotel() {
+    protected Hotel() {
+    }
 
+    public static class Builder {
+        private final Set<Image> imagesHotel = new HashSet<>();
+        private final Set<Room> rooms = new HashSet<>();
+        private final List<Commentary> commentaries = new ArrayList<>();
+        private String name;
+        private String description;
+        private SizeType sizeHotel;
+        private Contact contact;
+        private Address address;
+        private InformationHotel informationHotel;
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setSizeHotel(SizeType sizeHotel) {
+            this.sizeHotel = sizeHotel;
+            return this;
+        }
+
+        public Builder setContact(Contact contact) {
+            this.contact = contact;
+            return this;
+        }
+
+        public Builder setAddress(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder setInformationHotel(InformationHotel informationHotel) {
+            this.informationHotel = informationHotel;
+            return this;
+        }
+
+        public Hotel build() {
+            return new Hotel(name, description, sizeHotel, contact, address, informationHotel);
+        }
     }
 }
