@@ -1,4 +1,4 @@
-package org.guilhermedev.hotelbooking.controllers;
+package org.guilhermedev.hotelbooking.controllers.user;
 
 import org.guilhermedev.hotelbooking.dto.user.insert.UserLoginDTO;
 import org.guilhermedev.hotelbooking.dto.user.insert.UserRegisterDTO;

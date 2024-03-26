@@ -1,7 +1,7 @@
 package org.guilhermedev.hotelbooking.dto.user.read;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
+import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 import org.guilhermedev.hotelbooking.models.user.User;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -10,13 +10,13 @@ public class UserReadDTO extends RepresentationModel<UserReadDTO> {
     private final Long id;
     private final String name;
     private final String email;
-    private final ContactDTO contact;
+    private final ContactCreateDTO contact;
 
     public UserReadDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.contact = new ContactDTO(user.getContact());
+        this.contact = new ContactCreateDTO(user.getContact());
     }
 
     public Long getId() {
@@ -31,7 +31,7 @@ public class UserReadDTO extends RepresentationModel<UserReadDTO> {
         return email;
     }
 
-    public ContactDTO getContact() {
+    public ContactCreateDTO getContact() {
         return contact;
     }
 }

@@ -1,10 +1,7 @@
 package org.guilhermedev.hotelbooking.models.user;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
-import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
+import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +12,7 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("Enterprise")
 public class Enterprise extends User {
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "enterprise")
     private Hotel hotel;
 
     private Enterprise(Long id, String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
@@ -90,7 +87,7 @@ public class Enterprise extends User {
             return this;
         }
 
-        public Builder contact(ContactDTO contactDTO) {
+        public Builder contact(ContactCreateDTO contactDTO) {
             this.contact = new Contact(contactDTO);
             return this;
         }

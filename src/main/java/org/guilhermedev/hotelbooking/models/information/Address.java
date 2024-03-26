@@ -1,6 +1,7 @@
 package org.guilhermedev.hotelbooking.models.information;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressCreateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Coordinate;
 
 @Entity
@@ -15,6 +16,7 @@ public class Address {
     @Embedded
     private Coordinate coordinate;
 
-    public Address() {
+    public Address(AddressCreateDTO address) {
+
     }
 }

@@ -9,4 +9,12 @@ public class Image {
     private Long id;
     @Lob
     private byte[] bytes;
+
+    public Image(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
+    public Image() {
+
+    }
 }

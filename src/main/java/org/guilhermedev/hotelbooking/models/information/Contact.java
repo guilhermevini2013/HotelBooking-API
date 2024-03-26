@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
+import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 
 @Entity
 public class Contact {
@@ -17,7 +17,7 @@ public class Contact {
     protected Contact() {
     }
 
-    public Contact(ContactDTO contact) {
+    public Contact(ContactCreateDTO contact) {
         this.numberPhone = contact.numberPhone();
         this.email = contact.email();
     }

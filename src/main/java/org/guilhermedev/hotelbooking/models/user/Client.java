@@ -3,7 +3,7 @@ package org.guilhermedev.hotelbooking.models.user;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import org.guilhermedev.hotelbooking.dto.user.insert.ContactDTO;
+import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -127,8 +127,8 @@ public class Client extends User {
             return this;
         }
 
-        public Builder contact(ContactDTO contactDTO) {
-            this.contact = new Contact(contactDTO);
+        public Builder contact(ContactCreateDTO contact) {
+            this.contact = new Contact(contact);
             return this;
         }
 

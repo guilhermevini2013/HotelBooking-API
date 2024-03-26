@@ -8,5 +8,15 @@ public class InformationHotel {
     private Double totalEvaluations;
 
     public InformationHotel() {
+        totalBookings = 0;
+        totalEvaluations = 0.0;
+    }
+
+    public Integer getTotalBookings() {
+        return totalBookings;
+    }
+
+    public Double getTotalEvaluations() {
+        return totalEvaluations;
     }
 }
