@@ -4,6 +4,7 @@ import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.SizeType;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 public record HotelCreateDTO(
@@ -12,7 +13,5 @@ public record HotelCreateDTO(
         String description,
         SizeType sizeHotel,
         ContactCreateDTO contact,
-        AddressCreateDTO address,
-        Set<MultipartFile> images,
-        Set<RoomCreateDTO> rooms) {
+        AddressCreateDTO address) {
 }

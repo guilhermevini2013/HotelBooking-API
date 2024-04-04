@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,14 +23,16 @@ import java.util.stream.Collectors;
 public class HotelService {
     private final HotelRepository hotelRepository;
     private final UserRepository userRepository;
+    private final ImageService imageService;
 
-    public HotelService(HotelRepository hotelRepository, UserRepository userRepository) {
+    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService) {
         this.hotelRepository = hotelRepository;
         this.userRepository = userRepository;
+        this.imageService = imageService;
     }
 
     @Transactional
-    public HotelReadDTO insert(HotelCreateDTO hotelCreateDTO) {
+    public HotelReadDTO insert(HotelCreateDTO hotelCreateDTO, List<MultipartFile> images) {
         Enterprise enterprise = getReferenceById(hotelCreateDTO.idEnterprise());
         Hotel hotel = new Hotel.Builder()
                 .name(hotelCreateDTO.name())
@@ -39,16 +42,16 @@ public class HotelService {
                 .description(hotelCreateDTO.description())
                 .informationHotel(new InformationHotel())
                 .enterprise(enterprise)
-                .imagesHotel(getImages(hotelCreateDTO.images()))
+                .imagesHotel(getImages(images))
                 .build();
         hotel = hotelRepository.save(hotel);
         return new HotelReadDTO(hotel);
     }
 
-    private Set<Image> getImages(Set<MultipartFile> files) {
-        return files.stream().map(file -> {
+    private Set<Image> getImages(List<MultipartFile> images) {
+        return images.stream().map(image -> {
             try {
-                return new Image(file.getBytes());
+                return new Image(imageService.transformBase64(image));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -56,6 +59,6 @@ public class HotelService {
     }
 
     private Enterprise getReferenceById(Long id) {
-        return (Enterprise) userRepository.getReferenceById(id);
+        return userRepository.findEnterpriseById(id).get();
     }
 }

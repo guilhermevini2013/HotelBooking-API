@@ -3,14 +3,16 @@ package org.guilhermedev.hotelbooking.controllers.hotel;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
 import org.guilhermedev.hotelbooking.services.hotel.HotelService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Base64;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "hotel")
@@ -21,9 +23,9 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
-    @PostMapping
-    public ResponseEntity<HotelReadDTO> create(@RequestBody HotelCreateDTO hotelCreateDTO, UriComponentsBuilder componentsBuilder) {
-        HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO);
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<HotelReadDTO> create(@RequestPart HotelCreateDTO hotelCreateDTO,@RequestPart List<MultipartFile> images, UriComponentsBuilder componentsBuilder) {
+        HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO,images);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(hotelInserted.getId()).toUri();
         return ResponseEntity.created(uri).body(hotelInserted);
     }

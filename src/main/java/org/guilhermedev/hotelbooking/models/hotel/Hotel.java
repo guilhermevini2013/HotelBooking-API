@@ -16,7 +16,7 @@ import java.util.Set;
 public class Hotel {
     @OneToMany
     private final List<Commentary> commentaries = new ArrayList<>();
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> imagesHotel = new HashSet<>();
     @OneToMany
     private Set<Room> rooms = new HashSet<>();
