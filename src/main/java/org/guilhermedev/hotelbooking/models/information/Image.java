@@ -8,9 +8,9 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
-    private byte[] bytes;
+    private String bytes;
 
-    public Image(byte[] bytes) {
+    public Image(String bytes) {
         this.bytes = bytes;
     }
 

@@ -24,8 +24,8 @@ public class HotelController {
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<HotelReadDTO> create(@RequestPart HotelCreateDTO hotelCreateDTO,@RequestPart List<MultipartFile> images, UriComponentsBuilder componentsBuilder) {
-        HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO,images);
+    public ResponseEntity<HotelReadDTO> create(@RequestPart HotelCreateDTO hotelCreateDTO, @RequestPart List<MultipartFile> images, UriComponentsBuilder componentsBuilder) {
+        HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO, images);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(hotelInserted.getId()).toUri();
         return ResponseEntity.created(uri).body(hotelInserted);
     }

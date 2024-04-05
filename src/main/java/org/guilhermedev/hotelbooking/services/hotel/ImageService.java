@@ -9,8 +9,8 @@ import java.util.Base64;
 @Component
 public class ImageService {
 
-    public byte[] transformBase64(MultipartFile image) throws IOException {
-        byte[] encodeImage = Base64.getEncoder().encode(image.getBytes());
+    public String transformBase64(MultipartFile image) throws IOException {
+        String encodeImage = Base64.getEncoder().encodeToString(image.getBytes());
         return encodeImage;
     }
 }
