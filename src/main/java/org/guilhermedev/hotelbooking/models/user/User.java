@@ -19,22 +19,25 @@ public abstract class User implements UserDetails {
     protected String password;
     @Column(unique = true)
     protected String identity;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected Contact contact;
+    protected String phone;
     @OneToMany
     protected Set<RoleType> roles;
 
-    protected User(Long id, String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
+    public User(Long id, String name, String email, String password, String identity, String phone, Set<RoleType> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.identity = identity;
-        this.contact = contact;
+        this.phone = phone;
         this.roles = roles;
     }
 
     public User() {
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public Long getId() {
@@ -56,10 +59,6 @@ public abstract class User implements UserDetails {
 
     public String getIdentity() {
         return identity;
-    }
-
-    public Contact getContact() {
-        return contact;
     }
 
     public Set<RoleType> getRoles() {

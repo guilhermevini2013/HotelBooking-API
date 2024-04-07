@@ -16,7 +16,6 @@ public class UserFactory {
                 .identity("49486479999")
                 .name("Guilherme")
                 .roles(Set.of(new RoleType("ROLE_CLIENT")))
-                .dateOfBirth(Date.from(Instant.now()))
-                .gender("Masculino");
+                .dateOfBirth(Date.from(Instant.now()));
     }
 }

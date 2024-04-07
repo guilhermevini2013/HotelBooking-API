@@ -3,8 +3,6 @@ package org.guilhermedev.hotelbooking.models.user;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
-import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
@@ -13,14 +11,12 @@ import java.util.*;
 @DiscriminatorValue("Client")
 public class Client extends User {
     private Date dateOfBirth;
-    private String gender;
     @OneToMany(mappedBy = "client")
     private List<Booking> bookings;
 
-    private Client(Long id, String name, String email, String password, String identity, Set<RoleType> roles, Date dateOfBirth, String gender, Contact contact) {
-        super(id, name, email, password, identity, contact, roles);
+    private Client(Long id, String name, String email, String password, String identity, String phone, Set<RoleType> roles, Date dateOfBirth) {
+        super(id, name, email, password, identity, phone, roles);
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
         this.bookings = new ArrayList<>();
     }
 
@@ -68,9 +64,6 @@ public class Client extends User {
         return dateOfBirth;
     }
 
-    public String getGender() {
-        return gender;
-    }
 
     public List<Booking> getBookings() {
         return bookings;
@@ -84,8 +77,7 @@ public class Client extends User {
         private String identity;
         private Set<RoleType> roles;
         private Date dateOfBirth;
-        private String gender;
-        private Contact contact;
+        private String phone;
 
         public Builder id(Long id) {
             this.id = id;
@@ -122,18 +114,13 @@ public class Client extends User {
             return this;
         }
 
-        public Builder gender(String gender) {
-            this.gender = gender;
-            return this;
-        }
-
-        public Builder contact(ContactCreateDTO contact) {
-            this.contact = new Contact(contact);
+        public Builder phone(String phone) {
+            this.phone = phone;
             return this;
         }
 
         public Client build() {
-            return new Client(id, name, email, password, identity, roles, dateOfBirth, gender, contact);
+            return new Client(id, name, email, password, identity, phone, roles, dateOfBirth);
         }
     }
 }

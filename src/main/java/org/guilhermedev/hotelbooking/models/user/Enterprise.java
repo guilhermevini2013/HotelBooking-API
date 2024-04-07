@@ -1,9 +1,7 @@
 package org.guilhermedev.hotelbooking.models.user;
 
 import jakarta.persistence.*;
-import org.guilhermedev.hotelbooking.dto.contact.insert.ContactCreateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
-import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -12,11 +10,11 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("Enterprise")
 public class Enterprise extends User {
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "enterprise")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "enterprise")
     private Hotel hotel;
 
-    private Enterprise(Long id, String name, String email, String password, String identity, Contact contact, Set<RoleType> roles) {
-        super(id, name, email, password, identity, contact, roles);
+    private Enterprise(Long id, String name, String email, String password, String identity, String phone, Set<RoleType> roles) {
+        super(id, name, email, password, identity, phone, roles);
     }
 
     protected Enterprise() {
@@ -60,7 +58,7 @@ public class Enterprise extends User {
         private String email;
         private String password;
         private String identity;
-        private Contact contact;
+        private String phone;
 
         public Builder id(Long id) {
             this.id = id;
@@ -87,8 +85,8 @@ public class Enterprise extends User {
             return this;
         }
 
-        public Builder contact(ContactCreateDTO contactDTO) {
-            this.contact = new Contact(contactDTO);
+        public Builder phone(String phone) {
+            this.phone = phone;
             return this;
         }
 
@@ -98,7 +96,7 @@ public class Enterprise extends User {
         }
 
         public Enterprise build() {
-            return new Enterprise(id,name, email, password, identity, contact, roles);
+            return new Enterprise(id, name, email, password, identity, phone, roles);
         }
     }
 

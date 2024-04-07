@@ -13,10 +13,11 @@ import java.util.Set;
 public class EnterpriseCreate implements UserCreate {
     public User create(UserRegisterDTO enterpriseRegisterDTO, RoleType roleType, PasswordEncoder passwordEncoder) {
         return new Enterprise.Builder()
-                .contact(enterpriseRegisterDTO.contact())
                 .password(passwordEncoder.encode(enterpriseRegisterDTO.password()))
                 .identity(enterpriseRegisterDTO.identity())
                 .name(enterpriseRegisterDTO.name())
+                .email(enterpriseRegisterDTO.email())
+                .phone(enterpriseRegisterDTO.numberPhone())
                 .roles(Set.of(roleType))
                 .build();
     }

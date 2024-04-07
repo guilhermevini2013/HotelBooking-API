@@ -14,13 +14,12 @@ public class ClientCreate implements UserCreate {
     public User create(UserRegisterDTO clientRegisterDTO, RoleType roleType, PasswordEncoder passwordEncoder) {
         return new Client.Builder()
                 .email(clientRegisterDTO.email())
-                .contact(clientRegisterDTO.contact())
                 .password(passwordEncoder.encode(clientRegisterDTO.password()))
                 .identity(clientRegisterDTO.identity())
                 .name(clientRegisterDTO.name())
                 .roles(Set.of(roleType))
+                .phone(clientRegisterDTO.numberPhone())
                 .dateOfBirth(clientRegisterDTO.dateOfBirth())
-                .gender(clientRegisterDTO.gender())
                 .build();
     }
 }
