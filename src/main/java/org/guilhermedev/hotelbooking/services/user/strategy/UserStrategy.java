@@ -11,6 +11,7 @@ import org.guilhermedev.hotelbooking.repositories.UserRepository;
 import org.guilhermedev.hotelbooking.services.token.JWTService;
 import org.guilhermedev.hotelbooking.services.user.strategy.create.UserCreate;
 import org.guilhermedev.hotelbooking.services.user.strategy.login.UserLogin;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,12 +37,17 @@ public class UserStrategy {
     public UserReadDTO create(UserCreate userCreate, UserRegisterDTO userRegisterDTO) {
         RoleType role = roleRepository.findByAuthority("ROLE_" + userRegisterDTO.typeUser());
         User user = userCreate.create(userRegisterDTO, role, passwordEncoder);
-        user = userRepository.save(user);
+        try {
+            user = userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Email ou identidade ja existentes");
+        }
         return new UserReadDTO(user);
     }
-    public String login(UserLogin userLogin,UserLoginDTO userLoginDTO){
+
+    public String login(UserLogin userLogin, UserLoginDTO userLoginDTO) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(userLoginDTO.credential(), userLoginDTO.password());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        return userLogin.authenticate(authenticate,jwtService);
+        return userLogin.authenticate(authenticate, jwtService);
     }
 }

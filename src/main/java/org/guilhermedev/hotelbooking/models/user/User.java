@@ -20,7 +20,7 @@ public abstract class User implements UserDetails {
     @Column(unique = true)
     protected String identity;
     protected String phone;
-    @OneToMany
+    @ManyToMany
     protected Set<RoleType> roles;
 
     public User(Long id, String name, String email, String password, String identity, String phone, Set<RoleType> roles) {

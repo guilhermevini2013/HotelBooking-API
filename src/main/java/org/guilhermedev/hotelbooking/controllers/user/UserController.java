@@ -1,5 +1,6 @@
 package org.guilhermedev.hotelbooking.controllers.user;
 
+import jakarta.validation.Valid;
 import org.guilhermedev.hotelbooking.dto.user.insert.UserLoginDTO;
 import org.guilhermedev.hotelbooking.dto.user.insert.UserRegisterDTO;
 import org.guilhermedev.hotelbooking.dto.user.read.UserLoadDTO;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserReadDTO> register(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<UserReadDTO> register(@RequestBody @Valid UserRegisterDTO userRegisterDTO, UriComponentsBuilder componentsBuilder) {
         UserReadDTO userRegister = userService.register(userRegisterDTO);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(userRegister.getId()).toUri();
         return ResponseEntity.created(uri).body(userRegister);
