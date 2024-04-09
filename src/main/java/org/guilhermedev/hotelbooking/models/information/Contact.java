@@ -28,12 +28,9 @@ public class Contact {
         this.email = contact.email;
         this.hotel = hotel;
     }
-
-    public Contact(Contact contact, ContactUpdateDTO contactUpdateDTO) {
-        this.id = contact.getId();
-        this.numberPhone = contactUpdateDTO.phoneNumber();
-        this.email = contactUpdateDTO.email();
-        this.hotel = contact.hotel;
+    public void update(ContactUpdateDTO contact) {
+        this.numberPhone = contact.phoneNumber();
+        this.email = contact.email();
     }
 
     public Long getId() {

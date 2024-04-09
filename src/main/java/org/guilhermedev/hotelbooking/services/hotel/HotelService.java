@@ -57,14 +57,10 @@ public class HotelService {
     }
 
     private void copyEntity(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images, Hotel hotel) {
-        hotel.setName(hotelUpdateDTO.name());
-        hotel.setSizeHotel(hotelUpdateDTO.sizeHotel());
-        hotel.setDescription(hotelUpdateDTO.description());
-        Set<Image> imagesHotel = hotel.getImagesHotel();
-        for (Image image : imagesHotel) {
+        for (Image image : hotel.getImagesHotel()) {
             imageRepository.delete(image);
         }
-        hotel.setImagesHotel(imageService.transformBase64(images));
+        hotel.updateHotel(hotelUpdateDTO, imageService.transformBase64(images));
     }
 
     private Enterprise getReferenceById(Long id) {

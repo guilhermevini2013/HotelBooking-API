@@ -1,6 +1,7 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Commentary;
 import org.guilhermedev.hotelbooking.models.information.Contact;
@@ -52,25 +53,11 @@ public class Hotel {
 
     protected Hotel() {
     }
-
-    public void setImagesHotel(Set<Image> imagesHotel) {
-        this.imagesHotel = imagesHotel;
-    }
-
-    public Enterprise getEnterprise() {
-        return enterprise;
-    }
-
-    public void setSizeHotel(SizeType sizeHotel) {
-        this.sizeHotel = sizeHotel;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void updateHotel(HotelUpdateDTO hotelUpdateDTO,Set<Image> images){
+        this.imagesHotel = images;
+        this.sizeHotel = hotelUpdateDTO.sizeHotel();
+        this.name = hotelUpdateDTO.name();
+        this.description = hotelUpdateDTO.description();
     }
 
     public Long getId() {

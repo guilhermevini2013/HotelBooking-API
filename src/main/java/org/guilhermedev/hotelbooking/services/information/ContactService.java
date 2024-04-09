@@ -17,13 +17,8 @@ public class ContactService {
 
     @Transactional
     public void updateContact(ContactUpdateDTO contactUpdateDTO) {
-        Contact hotelFound = contactRepository.findContactById(contactUpdateDTO.idHotel())
+        Contact contactFound = contactRepository.findContactById(contactUpdateDTO.idHotel())
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
-        copyEntityAndUpdate(contactUpdateDTO, hotelFound);
-    }
-
-    private void copyEntityAndUpdate(ContactUpdateDTO contactUpdateDTO, Contact contact) {
-        Contact contactUpdate = new Contact(contact, contactUpdateDTO);
-        contactRepository.save(contactUpdate);
+        contactFound.update(contactUpdateDTO);
     }
 }

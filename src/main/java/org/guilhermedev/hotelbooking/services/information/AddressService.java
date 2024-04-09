@@ -18,11 +18,6 @@ public class AddressService {
     @Transactional
     public void updateAddress(AddressUpdateDTO addressDTO) {
         Address addressFound = addressRepository.findByHotelId(addressDTO.idHotel()).orElseThrow(() -> new ResourceNotFoundException("Address not found"));
-        copyEntityAndUpdate(addressDTO, addressFound);
-    }
-
-    private void copyEntityAndUpdate(AddressUpdateDTO addressDTO, Address addressFound) {
-        Address addressUpdate = new Address(addressFound, addressDTO);
-        addressRepository.save(addressUpdate);
+        addressFound.update(addressDTO);
     }
 }

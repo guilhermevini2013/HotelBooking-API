@@ -38,14 +38,12 @@ public class Address {
         this.hotel = hotel;
     }
 
-    public Address(Address address, AddressUpdateDTO addressUpdateDTO) {
-        this.id = address.id;
+    public void update(AddressUpdateDTO addressUpdateDTO) {
         this.street = addressUpdateDTO.street();
         this.streetNumber = addressUpdateDTO.streetNumber();
         this.city = addressUpdateDTO.city();
         this.district = addressUpdateDTO.district();
         this.coordinate = new Coordinate(addressUpdateDTO.positionX(), addressUpdateDTO.positionY());
-        this.hotel = address.hotel;
     }
 
     public Address() {
