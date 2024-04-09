@@ -16,7 +16,7 @@ import java.util.Set;
 public class Hotel {
     @OneToMany
     private final List<Commentary> commentaries = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "hotel")
     private Set<Image> imagesHotel = new HashSet<>();
     @OneToMany
     private Set<Room> rooms = new HashSet<>();
@@ -28,7 +28,7 @@ public class Hotel {
     private SizeType sizeHotel;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contact contact;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "hotel")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
     private Address address;
     @Embedded
     private InformationHotel informationHotel;
@@ -45,11 +45,27 @@ public class Hotel {
         this.description = description;
         this.sizeHotel = sizeHotel;
         this.contact = contact;
-        this.address = new Address(address,this);
+        this.address = new Address(address, this);
         this.informationHotel = informationHotel;
     }
 
     protected Hotel() {
+    }
+
+    public void setImagesHotel(Set<Image> imagesHotel) {
+        this.imagesHotel = imagesHotel;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setSizeHotel(SizeType sizeHotel) {
+        this.sizeHotel = sizeHotel;
     }
 
     public Long getId() {
@@ -78,6 +94,10 @@ public class Hotel {
 
     public InformationHotel getInformationHotel() {
         return informationHotel;
+    }
+
+    public Set<Image> getImagesHotel() {
+        return imagesHotel;
     }
 
     public static class Builder {

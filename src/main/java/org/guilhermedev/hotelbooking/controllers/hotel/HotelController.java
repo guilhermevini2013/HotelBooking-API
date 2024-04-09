@@ -1,6 +1,7 @@
 package org.guilhermedev.hotelbooking.controllers.hotel;
 
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
 import org.guilhermedev.hotelbooking.services.hotel.HotelService;
 import org.springframework.http.MediaType;
@@ -28,5 +29,11 @@ public class HotelController {
         HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO, images);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(hotelInserted.getId()).toUri();
         return ResponseEntity.created(uri).body(hotelInserted);
+    }
+
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> update(@RequestPart HotelUpdateDTO hotelUpdateDTO, @RequestPart List<MultipartFile> images) {
+        hotelService.update(hotelUpdateDTO, images);
+        return ResponseEntity.ok().build();
     }
 }

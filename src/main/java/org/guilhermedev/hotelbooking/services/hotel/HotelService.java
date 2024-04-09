@@ -1,6 +1,7 @@
 package org.guilhermedev.hotelbooking.services.hotel;
 
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 import org.guilhermedev.hotelbooking.models.hotel.InformationHotel;
@@ -48,7 +49,23 @@ public class HotelService {
         return new HotelReadDTO(hotel);
     }
 
+    @Transactional
+    public void update(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images) {
+        Hotel referenceById = hotelRepository.getReferenceById(hotelUpdateDTO.idHotel());
+        copyEntity(hotelUpdateDTO, images, referenceById);
+    }
+
+    private void copyEntity(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images, Hotel hotel) {
+        hotel.setName(hotelUpdateDTO.name());
+        hotel.setSizeHotel(hotelUpdateDTO.sizeHotel());
+        hotel.setDescription(hotelUpdateDTO.description());
+        hotel.setImagesHotel(imageService.transformBase64(images));
+
+    }
+
     private Enterprise getReferenceById(Long id) {
         return userRepository.findEnterpriseById(id).get();
     }
+
+
 }
