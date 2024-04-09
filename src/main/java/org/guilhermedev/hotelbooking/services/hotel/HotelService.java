@@ -42,20 +42,10 @@ public class HotelService {
                 .description(hotelCreateDTO.description())
                 .informationHotel(new InformationHotel())
                 .enterprise(enterprise)
-                .imagesHotel(getImages(images))
+                .imagesHotel(imageService.transformBase64(images))
                 .build();
         hotel = hotelRepository.save(hotel);
         return new HotelReadDTO(hotel);
-    }
-
-    private Set<Image> getImages(List<MultipartFile> images) {
-        return images.stream().map(image -> {
-            try {
-                return new Image(imageService.transformBase64(image));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.toSet());
     }
 
     private Enterprise getReferenceById(Long id) {

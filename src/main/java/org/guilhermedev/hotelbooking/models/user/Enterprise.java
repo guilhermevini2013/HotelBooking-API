@@ -21,6 +21,10 @@ public class Enterprise extends User {
 
     }
 
+    public Hotel getHotel() {
+        return hotel;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

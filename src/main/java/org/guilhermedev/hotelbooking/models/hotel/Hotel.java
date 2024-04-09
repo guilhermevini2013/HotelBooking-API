@@ -28,7 +28,7 @@ public class Hotel {
     private SizeType sizeHotel;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contact contact;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "hotel")
     private Address address;
     @Embedded
     private InformationHotel informationHotel;
@@ -45,7 +45,7 @@ public class Hotel {
         this.description = description;
         this.sizeHotel = sizeHotel;
         this.contact = contact;
-        this.address = address;
+        this.address = new Address(address,this);
         this.informationHotel = informationHotel;
     }
 

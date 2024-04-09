@@ -9,4 +9,17 @@ public class Coordinate {
 
     public Coordinate() {
     }
+
+    public Coordinate(Double positionX, Double positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+    }
+
+    public void setPositionX(Double positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPositionY(Double positionY) {
+        this.positionY = positionY;
+    }
 }
