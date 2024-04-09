@@ -10,13 +10,10 @@ public class Image {
     private Long id;
     @Lob
     private String bytes;
-    @ManyToOne
-    private Hotel hotel;
 
     public Image(String bytes) {
         this.bytes = bytes;
     }
-
     public Image() {
     }
 }

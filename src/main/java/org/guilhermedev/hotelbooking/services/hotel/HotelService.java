@@ -10,6 +10,7 @@ import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.guilhermedev.hotelbooking.models.information.Image;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.HotelRepository;
+import org.guilhermedev.hotelbooking.repositories.ImageRepository;
 import org.guilhermedev.hotelbooking.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +26,13 @@ public class HotelService {
     private final HotelRepository hotelRepository;
     private final UserRepository userRepository;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
-    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService) {
+    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService, ImageRepository imageRepository) {
         this.hotelRepository = hotelRepository;
         this.userRepository = userRepository;
         this.imageService = imageService;
+        this.imageRepository = imageRepository;
     }
 
     @Transactional
@@ -59,8 +62,11 @@ public class HotelService {
         hotel.setName(hotelUpdateDTO.name());
         hotel.setSizeHotel(hotelUpdateDTO.sizeHotel());
         hotel.setDescription(hotelUpdateDTO.description());
+        Set<Image> imagesHotel = hotel.getImagesHotel();
+        for (Image image : imagesHotel) {
+            imageRepository.delete(image);
+        }
         hotel.setImagesHotel(imageService.transformBase64(images));
-
     }
 
     private Enterprise getReferenceById(Long id) {
