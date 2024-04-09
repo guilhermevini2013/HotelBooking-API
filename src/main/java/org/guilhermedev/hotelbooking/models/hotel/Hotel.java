@@ -26,25 +26,26 @@ public class Hotel {
     private String name;
     private String description;
     private SizeType sizeHotel;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
     private Contact contact;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
     private Address address;
     @Embedded
     private InformationHotel informationHotel;
     @OneToOne(fetch = FetchType.LAZY)
     private Enterprise enterprise;
 
-    private Hotel(Enterprise enterprise, String name, String description,
+    private Hotel(Long id,Enterprise enterprise, String name, String description,
                   SizeType sizeHotel, Contact contact, Address address, InformationHotel informationHotel,
                   Set<Image> imagesHotel, Set<Room> rooms) {
+        this.id = id;
         this.imagesHotel = imagesHotel;
         this.rooms = rooms;
         this.enterprise = enterprise;
         this.name = name;
         this.description = description;
         this.sizeHotel = sizeHotel;
-        this.contact = contact;
+        this.contact = new Contact(contact,this);
         this.address = new Address(address, this);
         this.informationHotel = informationHotel;
     }
@@ -56,16 +57,20 @@ public class Hotel {
         this.imagesHotel = imagesHotel;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public void setSizeHotel(SizeType sizeHotel) {
+        this.sizeHotel = sizeHotel;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setSizeHotel(SizeType sizeHotel) {
-        this.sizeHotel = sizeHotel;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -101,6 +106,7 @@ public class Hotel {
     }
 
     public static class Builder {
+        private Long id;
         private Set<Image> imagesHotel = new HashSet<>();
         private Set<Room> rooms = new HashSet<>();
         private String name;
@@ -118,6 +124,10 @@ public class Hotel {
 
         public Builder description(String description) {
             this.description = description;
+            return this;
+        }
+        public Builder id(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -157,7 +167,7 @@ public class Hotel {
         }
 
         public Hotel build() {
-            return new Hotel(enterprise, name, description, sizeHotel, contact, address, informationHotel, imagesHotel, rooms);
+            return new Hotel(id,enterprise, name, description, sizeHotel, contact, address, informationHotel, imagesHotel, rooms);
         }
     }
 }

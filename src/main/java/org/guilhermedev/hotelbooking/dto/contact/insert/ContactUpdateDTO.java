@@ -1,7 +1,7 @@
 package org.guilhermedev.hotelbooking.dto.contact.insert;
 
 public record ContactUpdateDTO(
-        Long idEnterprise,
+        Long idHotel,
         String phoneNumber,
         String email) {
 }

@@ -2,6 +2,8 @@ package org.guilhermedev.hotelbooking.models.information;
 
 import jakarta.persistence.*;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressCreateDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressUpdateDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Coordinate;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 
@@ -16,7 +18,7 @@ public class Address {
     private String district;
     @Embedded
     private Coordinate coordinate;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Hotel hotel;
 
     public Address(AddressCreateDTO address) {
@@ -36,24 +38,14 @@ public class Address {
         this.hotel = hotel;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setStreetNumber(Integer streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public Address(Address address, AddressUpdateDTO addressUpdateDTO) {
+        this.id = address.id;
+        this.street = addressUpdateDTO.street();
+        this.streetNumber = addressUpdateDTO.streetNumber();
+        this.city = addressUpdateDTO.city();
+        this.district = addressUpdateDTO.district();
+        this.coordinate = new Coordinate(addressUpdateDTO.positionX(), addressUpdateDTO.positionY());
+        this.hotel = address.hotel;
     }
 
     public Address() {
