@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 public record HotelCreateDTO(
-        Long idEnterprise,
         String name,
         String description,
         SizeType sizeHotel,

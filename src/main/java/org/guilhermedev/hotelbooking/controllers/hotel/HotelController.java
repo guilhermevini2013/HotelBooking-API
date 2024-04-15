@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "hotel")
+@RequestMapping(value = "/hotel")
 public class HotelController {
     final private HotelService hotelService;
 

@@ -1,5 +1,6 @@
 package org.guilhermedev.hotelbooking.services.hotel;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
@@ -12,6 +13,7 @@ import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.HotelRepository;
 import org.guilhermedev.hotelbooking.repositories.ImageRepository;
 import org.guilhermedev.hotelbooking.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +37,7 @@ public class HotelService {
 
     @Transactional
     public HotelReadDTO insert(HotelCreateDTO hotelCreateDTO, List<MultipartFile> images) {
-        Enterprise enterprise = getReferenceById(hotelCreateDTO.idEnterprise());
+        Enterprise principal = (Enterprise) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Hotel hotel = new Hotel.Builder()
                 .name(hotelCreateDTO.name())
                 .address(new Address(hotelCreateDTO.address()))
@@ -43,7 +45,7 @@ public class HotelService {
                 .sizeHotel(hotelCreateDTO.sizeHotel())
                 .description(hotelCreateDTO.description())
                 .informationHotel(new InformationHotel())
-                .enterprise(enterprise)
+                .enterprise(principal)
                 .imagesHotel(imageService.transformBase64(images))
                 .build();
         hotel = hotelRepository.save(hotel);
@@ -52,8 +54,9 @@ public class HotelService {
 
     @Transactional
     public void update(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images) {
-        Hotel referenceById = hotelRepository.getReferenceById(hotelUpdateDTO.idHotel());
-        copyEntity(hotelUpdateDTO, images, referenceById);
+        Enterprise enterprise = (Enterprise) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Hotel hotel = hotelRepository.findByEnterpriseId(enterprise.getId()).orElseThrow(()-> new EntityNotFoundException("Hotel not found"));
+        copyEntity(hotelUpdateDTO, images, hotel);
     }
 
     private void copyEntity(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images, Hotel hotel) {
@@ -62,10 +65,4 @@ public class HotelService {
         }
         hotel.updateHotel(hotelUpdateDTO, imageService.transformBase64(images));
     }
-
-    private Enterprise getReferenceById(Long id) {
-        return userRepository.findEnterpriseById(id).get();
-    }
-
-
 }

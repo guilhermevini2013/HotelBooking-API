@@ -16,10 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final String[] h2DataBaseRoutes = {
-            "/h2",
-            "/h2/**"
-    };
     private final SecurityFilter securityFilter;
 
     public SecurityConfig(SecurityFilter securityFilter) {
@@ -28,8 +24,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        configureRoutesEnterpriseSecurity(http);
         configurePublicRoute(http);
-        return http.csrf(csrf -> csrf.disable())
+        return http.cors(cors -> cors.setBuilder(http))
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(header -> header.frameOptions(frame -> frame.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -37,11 +35,24 @@ public class SecurityConfig {
     }
 
     private void configurePublicRoute(HttpSecurity httpSecurity) throws Exception {
+        final String[] h2DataBaseRoutes = {
+                "/h2",
+                "/h2/**"
+        };
         httpSecurity.authorizeHttpRequests(httpRequest -> httpRequest
                 .requestMatchers(HttpMethod.POST, "user/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "user/auth").permitAll()
-                .requestMatchers(h2DataBaseRoutes).permitAll()
-                .anyRequest().permitAll());
+                .requestMatchers(h2DataBaseRoutes).permitAll());
+    }
+
+    private void configureRoutesEnterpriseSecurity(HttpSecurity http) throws Exception {
+        final String[] enterpriseRoutes = {
+                "/hotel",
+                "/hotel/**"
+        };
+        String role = "ENTERPRISE";
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(enterpriseRoutes).hasRole(role));
     }
 
     @Bean
