@@ -13,12 +13,16 @@ import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.HotelRepository;
 import org.guilhermedev.hotelbooking.repositories.ImageRepository;
 import org.guilhermedev.hotelbooking.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -33,6 +37,11 @@ public class HotelService {
         this.userRepository = userRepository;
         this.imageService = imageService;
         this.imageRepository = imageRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<HotelReadDTO> findAllByCity(PageRequest pageRequest, String city) {
+        return hotelRepository.findAllLikeByCity(city.toLowerCase(), pageRequest).map(hotel -> new HotelReadDTO(hotel));
     }
 
     @Transactional
@@ -55,7 +64,7 @@ public class HotelService {
     @Transactional
     public void update(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images) {
         Enterprise enterprise = (Enterprise) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Hotel hotel = hotelRepository.findByEnterpriseId(enterprise.getId()).orElseThrow(()-> new EntityNotFoundException("Hotel not found"));
+        Hotel hotel = hotelRepository.findByEnterpriseId(enterprise.getId()).orElseThrow(() -> new EntityNotFoundException("Hotel not found"));
         copyEntity(hotelUpdateDTO, images, hotel);
     }
 

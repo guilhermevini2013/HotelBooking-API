@@ -12,4 +12,16 @@ public class ContactReadDTO {
         this.numberPhone = contact.getNumberPhone();
         this.email = contact.getEmail();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNumberPhone() {
+        return numberPhone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

@@ -4,6 +4,9 @@ import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
 import org.guilhermedev.hotelbooking.services.hotel.HotelService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +38,15 @@ public class HotelController {
     public ResponseEntity<Void> update(@RequestPart HotelUpdateDTO hotelUpdateDTO, @RequestPart List<MultipartFile> images) {
         hotelService.update(hotelUpdateDTO, images);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{city}")
+    public ResponseEntity<Page<HotelReadDTO>> findAllLikeByCity(@PathVariable String city,
+                                                                @RequestParam(name = "linesPerPage", defaultValue = "15") Integer linesPerPage,
+                                                                @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                                @RequestParam(name = "direction", defaultValue = "ASC") String direction,
+                                                                @RequestParam(name = "orderBy", defaultValue = "id") String orderBy) {
+        Page<HotelReadDTO> allByCity = hotelService.findAllByCity(PageRequest.of(page, linesPerPage, Sort.Direction.fromString(direction), orderBy), city);
+        return ResponseEntity.ok(allByCity);
     }
 }

@@ -33,4 +33,36 @@ public class HotelReadDTO {
     public Long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getTotalBookings() {
+        return totalBookings;
+    }
+
+    public Double getTotalEvaluations() {
+        return totalEvaluations;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public SizeType getSizeHotel() {
+        return sizeHotel;
+    }
+
+    public ContactReadDTO getContact() {
+        return contact;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public InformationHotel getInformationHotel() {
+        return informationHotel;
+    }
 }

@@ -42,7 +42,8 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(httpRequest -> httpRequest
                 .requestMatchers(HttpMethod.POST, "user/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "user/auth").permitAll()
-                .requestMatchers(h2DataBaseRoutes).permitAll());
+                .requestMatchers(h2DataBaseRoutes).permitAll()
+                .anyRequest().permitAll());
     }
 
     private void configureRoutesEnterpriseSecurity(HttpSecurity http) throws Exception {
@@ -50,9 +51,8 @@ public class SecurityConfig {
                 "/hotel",
                 "/hotel/**"
         };
-        String role = "ENTERPRISE";
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(enterpriseRoutes).hasRole(role));
+                .requestMatchers(enterpriseRoutes).hasAnyRole("ENTERPRISE", "CLIENT"));
     }
 
     @Bean
