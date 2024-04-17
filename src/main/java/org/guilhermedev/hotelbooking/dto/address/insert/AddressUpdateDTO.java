@@ -1,4 +1,4 @@
-package org.guilhermedev.hotelbooking.dto.hotel.insert;
+package org.guilhermedev.hotelbooking.dto.address.insert;
 
 public record AddressUpdateDTO(
         String street,

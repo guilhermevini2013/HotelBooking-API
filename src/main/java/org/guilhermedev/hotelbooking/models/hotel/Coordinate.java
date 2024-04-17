@@ -15,11 +15,11 @@ public class Coordinate {
         this.positionY = positionY;
     }
 
-    public void setPositionX(Double positionX) {
-        this.positionX = positionX;
+    public Double getPositionX() {
+        return positionX;
     }
 
-    public void setPositionY(Double positionY) {
-        this.positionY = positionY;
+    public Double getPositionY() {
+        return positionY;
     }
 }

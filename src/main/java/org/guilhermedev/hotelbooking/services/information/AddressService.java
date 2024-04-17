@@ -1,6 +1,6 @@
 package org.guilhermedev.hotelbooking.services.information;
 
-import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressUpdateDTO;
+import org.guilhermedev.hotelbooking.dto.address.insert.AddressUpdateDTO;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.AddressRepository;

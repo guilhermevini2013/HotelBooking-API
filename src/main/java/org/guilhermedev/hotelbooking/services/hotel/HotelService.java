@@ -3,7 +3,9 @@ package org.guilhermedev.hotelbooking.services.hotel;
 import jakarta.persistence.EntityNotFoundException;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelCreateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.read.FindHotelFilterDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.read.HotelResharedDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 import org.guilhermedev.hotelbooking.models.hotel.InformationHotel;
 import org.guilhermedev.hotelbooking.models.information.Address;
@@ -13,6 +15,7 @@ import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.HotelRepository;
 import org.guilhermedev.hotelbooking.repositories.ImageRepository;
 import org.guilhermedev.hotelbooking.repositories.UserRepository;
+import org.guilhermedev.hotelbooking.services.hotel.searchFilter.HotelFilterChain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 @Service
 public class HotelService {
@@ -31,17 +31,19 @@ public class HotelService {
     private final UserRepository userRepository;
     private final ImageService imageService;
     private final ImageRepository imageRepository;
+    private final HotelFilterChain hotelFilterChain;
 
-    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService, ImageRepository imageRepository) {
+    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService, ImageRepository imageRepository, HotelFilterChain hotelFilterChain) {
         this.hotelRepository = hotelRepository;
         this.userRepository = userRepository;
         this.imageService = imageService;
         this.imageRepository = imageRepository;
+        this.hotelFilterChain = hotelFilterChain;
     }
 
     @Transactional(readOnly = true)
-    public Page<HotelReadDTO> findAllByCity(PageRequest pageRequest, String city) {
-        return hotelRepository.findAllLikeByCity(city.toLowerCase(), pageRequest).map(hotel -> new HotelReadDTO(hotel));
+    public Page<HotelResharedDTO> findAllByFilter(PageRequest pageRequest, FindHotelFilterDTO findHotelFilterDTO) {
+        return hotelFilterChain.filter(findHotelFilterDTO, pageRequest);
     }
 
     @Transactional
@@ -55,6 +57,7 @@ public class HotelService {
                 .description(hotelCreateDTO.description())
                 .informationHotel(new InformationHotel())
                 .enterprise(principal)
+                .price(hotelCreateDTO.price())
                 .imagesHotel(imageService.transformBase64(images))
                 .build();
         hotel = hotelRepository.save(hotel);

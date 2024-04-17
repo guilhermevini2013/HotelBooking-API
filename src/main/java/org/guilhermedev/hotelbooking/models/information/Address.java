@@ -1,9 +1,8 @@
 package org.guilhermedev.hotelbooking.models.information;
 
 import jakarta.persistence.*;
-import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressCreateDTO;
-import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressUpdateDTO;
-import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
+import org.guilhermedev.hotelbooking.dto.address.insert.AddressCreateDTO;
+import org.guilhermedev.hotelbooking.dto.address.insert.AddressUpdateDTO;
 import org.guilhermedev.hotelbooking.models.hotel.Coordinate;
 import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 
@@ -36,6 +35,30 @@ public class Address {
         this.district = address.district;
         this.coordinate = address.coordinate;
         this.hotel = hotel;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public Integer getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public void update(AddressUpdateDTO addressUpdateDTO) {

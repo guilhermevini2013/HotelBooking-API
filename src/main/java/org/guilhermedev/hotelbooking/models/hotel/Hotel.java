@@ -19,14 +19,13 @@ public class Hotel {
     private final List<Commentary> commentaries = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> imagesHotel = new HashSet<>();
-    @OneToMany
-    private Set<Room> rooms = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
     private SizeType sizeHotel;
+    private Double price;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
     private Contact contact;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
@@ -36,28 +35,33 @@ public class Hotel {
     @OneToOne(fetch = FetchType.LAZY)
     private Enterprise enterprise;
 
-    private Hotel(Long id,Enterprise enterprise, String name, String description,
+    private Hotel(Long id, Enterprise enterprise, String name, String description,
                   SizeType sizeHotel, Contact contact, Address address, InformationHotel informationHotel,
-                  Set<Image> imagesHotel, Set<Room> rooms) {
+                  Set<Image> imagesHotel, Double price) {
         this.id = id;
         this.imagesHotel = imagesHotel;
-        this.rooms = rooms;
         this.enterprise = enterprise;
+        this.price = price;
         this.name = name;
         this.description = description;
         this.sizeHotel = sizeHotel;
-        this.contact = new Contact(contact,this);
+        this.contact = new Contact(contact, this);
         this.address = new Address(address, this);
         this.informationHotel = informationHotel;
     }
 
     protected Hotel() {
     }
-    public void updateHotel(HotelUpdateDTO hotelUpdateDTO,Set<Image> images){
+
+    public void updateHotel(HotelUpdateDTO hotelUpdateDTO, Set<Image> images) {
         this.imagesHotel = images;
         this.sizeHotel = hotelUpdateDTO.sizeHotel();
         this.name = hotelUpdateDTO.name();
         this.description = hotelUpdateDTO.description();
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public Long getId() {
@@ -95,7 +99,7 @@ public class Hotel {
     public static class Builder {
         private Long id;
         private Set<Image> imagesHotel = new HashSet<>();
-        private Set<Room> rooms = new HashSet<>();
+        private Double price;
         private String name;
         private String description;
         private SizeType sizeHotel;
@@ -113,6 +117,7 @@ public class Hotel {
             this.description = description;
             return this;
         }
+
         public Builder id(Long id) {
             this.id = id;
             return this;
@@ -148,13 +153,13 @@ public class Hotel {
             return this;
         }
 
-        public Builder rooms(Set<Room> rooms) {
-            this.rooms = rooms;
+        public Builder price(Double price) {
+            this.price = price;
             return this;
         }
 
         public Hotel build() {
-            return new Hotel(id,enterprise, name, description, sizeHotel, contact, address, informationHotel, imagesHotel, rooms);
+            return new Hotel(id, enterprise, name, description, sizeHotel, contact, address, informationHotel, imagesHotel, price);
         }
     }
 }

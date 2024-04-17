@@ -1,4 +1,4 @@
-package org.guilhermedev.hotelbooking.dto.hotel.insert;
+package org.guilhermedev.hotelbooking.dto.address.insert;
 
 import jakarta.validation.constraints.NotBlank;
 

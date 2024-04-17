@@ -1,6 +1,6 @@
 package org.guilhermedev.hotelbooking.controllers.information;
 
-import org.guilhermedev.hotelbooking.dto.hotel.insert.AddressUpdateDTO;
+import org.guilhermedev.hotelbooking.dto.address.insert.AddressUpdateDTO;
 import org.guilhermedev.hotelbooking.services.information.AddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
