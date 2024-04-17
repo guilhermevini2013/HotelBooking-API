@@ -14,7 +14,6 @@ import org.guilhermedev.hotelbooking.models.information.Image;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.repositories.HotelRepository;
 import org.guilhermedev.hotelbooking.repositories.ImageRepository;
-import org.guilhermedev.hotelbooking.repositories.UserRepository;
 import org.guilhermedev.hotelbooking.services.hotel.searchFilter.HotelFilterChain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,14 +27,12 @@ import java.util.List;
 @Service
 public class HotelService {
     private final HotelRepository hotelRepository;
-    private final UserRepository userRepository;
     private final ImageService imageService;
     private final ImageRepository imageRepository;
     private final HotelFilterChain hotelFilterChain;
 
-    public HotelService(HotelRepository hotelRepository, UserRepository userRepository, ImageService imageService, ImageRepository imageRepository, HotelFilterChain hotelFilterChain) {
+    public HotelService(HotelRepository hotelRepository, ImageService imageService, ImageRepository imageRepository, HotelFilterChain hotelFilterChain) {
         this.hotelRepository = hotelRepository;
-        this.userRepository = userRepository;
         this.imageService = imageService;
         this.imageRepository = imageRepository;
         this.hotelFilterChain = hotelFilterChain;
