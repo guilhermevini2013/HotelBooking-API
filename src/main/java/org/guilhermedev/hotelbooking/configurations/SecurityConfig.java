@@ -25,6 +25,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         configureRoutesEnterpriseSecurity(http);
+        configureRoutesClientSecurity(http);
         configurePublicRoute(http);
         return http.cors(cors -> cors.setBuilder(http))
                 .csrf(csrf -> csrf.disable())
@@ -43,7 +44,15 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "user/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "user/auth").permitAll()
                 .requestMatchers(h2DataBaseRoutes).permitAll()
-                .anyRequest().permitAll());
+                .anyRequest().authenticated());
+    }
+    private  void configureRoutesClientSecurity(HttpSecurity http) throws Exception {
+        final String[] clientRoutes = {
+                "/commentary",
+                "/hotel/**"
+        };
+        http.authorizeHttpRequests(auth ->
+                auth.requestMatchers(clientRoutes).hasRole("CLIENT"));
     }
 
     private void configureRoutesEnterpriseSecurity(HttpSecurity http) throws Exception {
@@ -52,7 +61,7 @@ public class SecurityConfig {
                 "/hotel/**"
         };
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(enterpriseRoutes).hasAnyRole("ENTERPRISE", "CLIENT"));
+                .requestMatchers(enterpriseRoutes).hasAnyRole("ENTERPRISE"));
     }
 
     @Bean

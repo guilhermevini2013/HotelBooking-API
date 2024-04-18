@@ -5,6 +5,7 @@ import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.FindHotelFilterDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelReadDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.read.HotelResharedDTO;
+import org.guilhermedev.hotelbooking.dto.hotel.read.HotelSelectDTO;
 import org.guilhermedev.hotelbooking.services.hotel.HotelService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +39,12 @@ public class HotelController {
     public ResponseEntity<Void> update(@RequestPart HotelUpdateDTO hotelUpdateDTO, @RequestPart List<MultipartFile> images) {
         hotelService.update(hotelUpdateDTO, images);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<HotelSelectDTO> findById(@PathVariable Long id) {
+        HotelSelectDTO hotelFind = hotelService.findById(id);
+        return ResponseEntity.ok(hotelFind);
     }
 
     @GetMapping(value = "/byFilter")

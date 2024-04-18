@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 public class Hotel {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private final List<Commentary> commentaries = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> imagesHotel = new HashSet<>();
@@ -62,6 +62,10 @@ public class Hotel {
 
     public Double getPrice() {
         return price;
+    }
+
+    public List<Commentary> getCommentaries() {
+        return commentaries;
     }
 
     public Long getId() {
