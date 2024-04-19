@@ -18,11 +18,12 @@ public record HotelSelectDTO(
         ContactReadDTO contact,
         AddressReadDTO address,
         InformationHotel informationHotel,
-        List<CommentaryReadDTO> commentaries
+        List<CommentaryReadDTO> commentaries,
+        List<String> images
 ) {
     public HotelSelectDTO(Hotel hotel) {
         this(hotel.getId(), hotel.getName(), hotel.getDescription(), hotel.getSizeHotel(), hotel.getPrice(),
                 new ContactReadDTO(hotel.getContact()), new AddressReadDTO(hotel.getAddress()), hotel.getInformationHotel(),
-                hotel.getCommentaries().stream().map(CommentaryReadDTO::new).toList());
+                hotel.getCommentaries().stream().map(CommentaryReadDTO::new).toList(), hotel.getImagesHotel().stream().map(image -> image.getBytes()).toList());
     }
 }

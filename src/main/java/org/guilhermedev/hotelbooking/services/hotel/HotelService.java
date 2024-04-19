@@ -62,6 +62,7 @@ public class HotelService {
         hotel = hotelRepository.save(hotel);
         return new HotelReadDTO(hotel);
     }
+
     @Transactional(readOnly = true)
     public HotelSelectDTO findById(Long id){
         Hotel hotelFound = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));

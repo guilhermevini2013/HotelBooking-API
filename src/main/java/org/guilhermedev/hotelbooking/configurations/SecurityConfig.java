@@ -24,9 +24,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        configureRoutesEnterpriseSecurity(http);
         configureRoutesClientSecurity(http);
-        configurePublicRoute(http);
+        configureRoutesEnterpriseSecurity(http);
+        configurePublicRouteSecurity(http);
         return http.cors(cors -> cors.setBuilder(http))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    private void configurePublicRoute(HttpSecurity httpSecurity) throws Exception {
+    private void configurePublicRouteSecurity(HttpSecurity httpSecurity) throws Exception {
         final String[] h2DataBaseRoutes = {
                 "/h2",
                 "/h2/**"
@@ -49,7 +49,8 @@ public class SecurityConfig {
     private  void configureRoutesClientSecurity(HttpSecurity http) throws Exception {
         final String[] clientRoutes = {
                 "/commentary",
-                "/hotel/**"
+                "/hotel/id/**",
+                "/hotel/byFilter"
         };
         http.authorizeHttpRequests(auth ->
                 auth.requestMatchers(clientRoutes).hasRole("CLIENT"));

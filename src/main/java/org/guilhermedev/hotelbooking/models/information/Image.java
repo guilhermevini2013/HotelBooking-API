@@ -1,7 +1,6 @@
 package org.guilhermedev.hotelbooking.models.information;
 
 import jakarta.persistence.*;
-import org.guilhermedev.hotelbooking.models.hotel.Hotel;
 
 @Entity
 public class Image {
@@ -15,5 +14,9 @@ public class Image {
         this.bytes = bytes;
     }
     public Image() {
+    }
+
+    public String getBytes() {
+        return bytes;
     }
 }

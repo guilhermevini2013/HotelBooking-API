@@ -41,7 +41,7 @@ public class HotelController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<HotelSelectDTO> findById(@PathVariable Long id) {
         HotelSelectDTO hotelFind = hotelService.findById(id);
         return ResponseEntity.ok(hotelFind);
