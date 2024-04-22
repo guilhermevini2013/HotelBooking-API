@@ -50,7 +50,8 @@ public class SecurityConfig {
         final String[] clientRoutes = {
                 "/commentary",
                 "/hotel/id/**",
-                "/hotel/byFilter"
+                "/hotel/byFilter",
+                "/booking"
         };
         http.authorizeHttpRequests(auth ->
                 auth.requestMatchers(clientRoutes).hasRole("CLIENT"));

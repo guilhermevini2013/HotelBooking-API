@@ -1,11 +1,13 @@
 package org.guilhermedev.hotelbooking.models.hotel;
 
 import jakarta.persistence.*;
+import org.guilhermedev.hotelbooking.dto.booking.insert.BookingCreateDTO;
 import org.guilhermedev.hotelbooking.dto.hotel.insert.HotelUpdateDTO;
 import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Commentary;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.guilhermedev.hotelbooking.models.information.Image;
+import org.guilhermedev.hotelbooking.models.user.Client;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 
 import java.util.ArrayList;
@@ -54,6 +56,10 @@ public class Hotel {
     }
 
     protected Hotel() {
+    }
+
+    public void insertNotificationBooking(BookingCreateDTO bookingCreateDTO, Client client) {
+        notificationBooking.add(new BookingIncomplete(bookingCreateDTO.initialDate(), bookingCreateDTO.finalDate(), this, client));
     }
 
     public void calculateTotalEvaluations(Double newEvaluation) {
