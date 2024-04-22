@@ -24,6 +24,7 @@ public class Hotel {
     private Long id;
     private String name;
     private String description;
+    @Enumerated(EnumType.STRING)
     private SizeType sizeHotel;
     private Double price;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
@@ -34,6 +35,8 @@ public class Hotel {
     private InformationHotel informationHotel;
     @OneToOne(fetch = FetchType.LAZY)
     private Enterprise enterprise;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
+    private final List<BookingIncomplete> notificationBooking = new ArrayList<>();
 
     private Hotel(Long id, Enterprise enterprise, String name, String description,
                   SizeType sizeHotel, Contact contact, Address address, InformationHotel informationHotel,
