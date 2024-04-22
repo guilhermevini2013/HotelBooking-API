@@ -19,4 +19,7 @@ public class InformationHotel {
     public Double getTotalEvaluations() {
         return totalEvaluations;
     }
+     protected void setTotalEvaluations(Double totalEvaluations){
+        this.totalEvaluations = totalEvaluations;
+     }
 }

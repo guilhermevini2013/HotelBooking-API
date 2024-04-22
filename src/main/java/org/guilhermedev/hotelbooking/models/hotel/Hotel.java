@@ -53,6 +53,13 @@ public class Hotel {
     protected Hotel() {
     }
 
+    public void calculateTotalEvaluations(Double newEvaluation) {
+        Integer commentariesSize = commentaries.size() + 1;
+        Double mediaEvaluations = commentaries.stream().mapToDouble(evaluation -> evaluation.getEvaluation()).sum() + newEvaluation;
+        Double totalEvaluations = mediaEvaluations / commentariesSize;
+        this.informationHotel.setTotalEvaluations(totalEvaluations);
+    }
+
     public void updateHotel(HotelUpdateDTO hotelUpdateDTO, Set<Image> images) {
         this.imagesHotel = images;
         this.sizeHotel = hotelUpdateDTO.sizeHotel();

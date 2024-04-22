@@ -19,9 +19,10 @@ public class CommentaryService {
     }
 
     @Transactional
-    public void addCommentary(CommentaryCreateDTO commentaryCreateDTO){
+    public void addCommentary(CommentaryCreateDTO commentaryCreateDTO) {
         Client senderFind = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Hotel hotelNotFound = hotelRepository.findById(commentaryCreateDTO.idHotel()).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
-        hotelNotFound.getCommentaries().add(new Commentary(commentaryCreateDTO,senderFind));
+        Hotel hotelFound = hotelRepository.findById(commentaryCreateDTO.idHotel()).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+        hotelFound.calculateTotalEvaluations(commentaryCreateDTO.evaluation());
+        hotelFound.getCommentaries().add(new Commentary(commentaryCreateDTO, senderFind));
     }
 }
