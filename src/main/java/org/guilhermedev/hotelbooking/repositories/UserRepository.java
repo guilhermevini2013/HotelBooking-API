@@ -1,5 +1,6 @@
 package org.guilhermedev.hotelbooking.repositories;
 
+import org.guilhermedev.hotelbooking.models.user.Client;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 import org.guilhermedev.hotelbooking.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByCredential(@Param("credential") String credential);
     @Query("select e from Enterprise e WHERE e.id= :id")
     Optional<Enterprise> findEnterpriseById(Long id);
+    @Query("select c from Client c WHERE c.id= :id")
+    Optional<Client> findClientById(Long id);
 }

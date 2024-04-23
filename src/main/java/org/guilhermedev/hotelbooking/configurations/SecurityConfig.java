@@ -60,7 +60,8 @@ public class SecurityConfig {
     private void configureRoutesEnterpriseSecurity(HttpSecurity http) throws Exception {
         final String[] enterpriseRoutes = {
                 "/hotel",
-                "/hotel/**"
+                "/hotel/**",
+                "/booking/id/**"
         };
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(enterpriseRoutes).hasAnyRole("ENTERPRISE"));

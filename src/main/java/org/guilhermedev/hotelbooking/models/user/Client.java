@@ -1,8 +1,10 @@
 package org.guilhermedev.hotelbooking.models.user;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import org.guilhermedev.hotelbooking.dto.booking.insert.BookingCreateDTO;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
@@ -11,18 +13,20 @@ import java.util.*;
 @DiscriminatorValue("Client")
 public class Client extends User {
     private Date dateOfBirth;
-    @OneToMany(mappedBy = "client")
-    private List<Booking> bookings;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
+    private List<Booking> bookings = new ArrayList<>();
 
     private Client(Long id, String name, String email, String password, String identity, String phone, Set<RoleType> roles, Date dateOfBirth) {
         super(id, name, email, password, identity, phone, roles);
         this.dateOfBirth = dateOfBirth;
-        this.bookings = new ArrayList<>();
     }
 
 
     protected Client() {
 
+    }
+    public void insertBookings(Booking booking){
+        bookings.add(booking);
     }
 
     @Override

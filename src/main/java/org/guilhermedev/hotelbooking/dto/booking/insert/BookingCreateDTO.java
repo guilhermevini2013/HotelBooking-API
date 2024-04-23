@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public record BookingCreateDTO(
         Long idHotel,
         LocalDate initialDate,
-        LocalDate finalDate
+        LocalDate finalDate,
+        Double price
 ) {
 }

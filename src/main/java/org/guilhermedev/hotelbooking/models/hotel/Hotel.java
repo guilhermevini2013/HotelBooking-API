@@ -7,6 +7,7 @@ import org.guilhermedev.hotelbooking.models.information.Address;
 import org.guilhermedev.hotelbooking.models.information.Commentary;
 import org.guilhermedev.hotelbooking.models.information.Contact;
 import org.guilhermedev.hotelbooking.models.information.Image;
+import org.guilhermedev.hotelbooking.models.user.Booking;
 import org.guilhermedev.hotelbooking.models.user.Client;
 import org.guilhermedev.hotelbooking.models.user.Enterprise;
 
@@ -38,7 +39,7 @@ public class Hotel {
     @OneToOne(fetch = FetchType.LAZY)
     private Enterprise enterprise;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
-    private final List<BookingIncomplete> notificationBooking = new ArrayList<>();
+    private final List<Booking> notificationBooking = new ArrayList<>();
 
     private Hotel(Long id, Enterprise enterprise, String name, String description,
                   SizeType sizeHotel, Contact contact, Address address, InformationHotel informationHotel,
@@ -59,7 +60,16 @@ public class Hotel {
     }
 
     public void insertNotificationBooking(BookingCreateDTO bookingCreateDTO, Client client) {
-        notificationBooking.add(new BookingIncomplete(bookingCreateDTO.initialDate(), bookingCreateDTO.finalDate(), this, client));
+        Booking booking = new Booking(bookingCreateDTO.initialDate(), bookingCreateDTO.finalDate(), bookingCreateDTO.price(), client, this);
+        notificationBooking.add(booking);
+    }
+
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public List<Booking> getNotificationBooking() {
+        return notificationBooking;
     }
 
     public void calculateTotalEvaluations(Double newEvaluation) {
