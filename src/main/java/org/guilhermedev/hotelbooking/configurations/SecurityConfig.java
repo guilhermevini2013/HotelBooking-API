@@ -46,7 +46,8 @@ public class SecurityConfig {
                 .requestMatchers(h2DataBaseRoutes).permitAll()
                 .anyRequest().authenticated());
     }
-    private  void configureRoutesClientSecurity(HttpSecurity http) throws Exception {
+
+    private void configureRoutesClientSecurity(HttpSecurity http) throws Exception {
         final String[] clientRoutes = {
                 "/commentary",
                 "/hotel/id/**",
@@ -61,7 +62,8 @@ public class SecurityConfig {
         final String[] enterpriseRoutes = {
                 "/hotel",
                 "/hotel/**",
-                "/booking/id/**"
+                "/booking/id/**",
+                "/booking/pending"
         };
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(enterpriseRoutes).hasAnyRole("ENTERPRISE"));

@@ -6,6 +6,7 @@ public record BookingCreateDTO(
         Long idHotel,
         LocalDate initialDate,
         LocalDate finalDate,
+        Integer totalPerson,
         Double price
 ) {
 }

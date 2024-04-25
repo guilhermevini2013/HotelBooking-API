@@ -60,7 +60,7 @@ public class Hotel {
     }
 
     public void insertNotificationBooking(BookingCreateDTO bookingCreateDTO, Client client) {
-        Booking booking = new Booking(bookingCreateDTO.initialDate(), bookingCreateDTO.finalDate(), bookingCreateDTO.price(), client, this);
+        Booking booking = new Booking(bookingCreateDTO.initialDate(), bookingCreateDTO.finalDate(), bookingCreateDTO.price(), client, this, bookingCreateDTO.totalPerson());
         notificationBooking.add(booking);
     }
 

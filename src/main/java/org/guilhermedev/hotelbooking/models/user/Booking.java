@@ -13,6 +13,7 @@ public class Booking {
     private LocalDate initialDate;
     private LocalDate finalDate;
     private Double price;
+    private Integer totalPerson;
     @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,12 +23,13 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(LocalDate initialDate, LocalDate finalDate, Double price, Client client, Hotel hotel) {
+    public Booking(LocalDate initialDate, LocalDate finalDate, Double price, Client client, Hotel hotel,Integer totalPerson) {
         this.initialDate = initialDate;
         this.finalDate = finalDate;
         this.price = price;
         this.client = client;
         this.hotel = hotel;
+        this.totalPerson = totalPerson;
         this.isAccept = false;
     }
 
@@ -45,6 +47,10 @@ public class Booking {
 
     public LocalDate getFinalDate() {
         return finalDate;
+    }
+
+    public Integer getTotalPerson() {
+        return totalPerson;
     }
 
     public Double getPrice() {
