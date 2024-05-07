@@ -28,16 +28,16 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<HotelReadDTO> create(@RequestPart HotelCreateDTO hotelCreateDTO, @RequestPart List<MultipartFile> images, UriComponentsBuilder componentsBuilder) {
-        HotelReadDTO hotelInserted = hotelService.insert(hotelCreateDTO, images);
+    @PostMapping
+    public ResponseEntity<HotelReadDTO> create(@RequestBody HotelCreateDTO hotelCreate,UriComponentsBuilder componentsBuilder) {
+        HotelReadDTO hotelInserted = hotelService.insert(hotelCreate);
         URI uri = componentsBuilder.path("/{id}").buildAndExpand(hotelInserted.getId()).toUri();
         return ResponseEntity.created(uri).body(hotelInserted);
     }
 
-    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> update(@RequestPart HotelUpdateDTO hotelUpdateDTO, @RequestPart List<MultipartFile> images) {
-        hotelService.update(hotelUpdateDTO, images);
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody HotelUpdateDTO hotelUpdateDTO) {
+        hotelService.update(hotelUpdateDTO);
         return ResponseEntity.ok().build();
     }
 

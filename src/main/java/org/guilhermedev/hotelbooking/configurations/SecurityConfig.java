@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "user/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "user/auth").permitAll()
                 .requestMatchers(h2DataBaseRoutes).permitAll()
-                .anyRequest().authenticated());
+                .anyRequest().permitAll());
     }
 
     private void configureRoutesClientSecurity(HttpSecurity http) throws Exception {

@@ -25,17 +25,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HotelService {
     private final HotelRepository hotelRepository;
-    private final ImageService imageService;
     private final ImageRepository imageRepository;
     private final HotelFilterChain hotelFilterChain;
 
-    public HotelService(HotelRepository hotelRepository, ImageService imageService, ImageRepository imageRepository, HotelFilterChain hotelFilterChain) {
+    public HotelService(HotelRepository hotelRepository,ImageRepository imageRepository, HotelFilterChain hotelFilterChain) {
         this.hotelRepository = hotelRepository;
-        this.imageService = imageService;
         this.imageRepository = imageRepository;
         this.hotelFilterChain = hotelFilterChain;
     }
@@ -46,7 +45,7 @@ public class HotelService {
     }
 
     @Transactional
-    public HotelReadDTO insert(HotelCreateDTO hotelCreateDTO, List<MultipartFile> images) {
+    public HotelReadDTO insert(HotelCreateDTO hotelCreateDTO) {
         Enterprise principal = (Enterprise) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Hotel hotel = new Hotel.Builder()
                 .name(hotelCreateDTO.name())
@@ -57,7 +56,7 @@ public class HotelService {
                 .informationHotel(new InformationHotel())
                 .enterprise(principal)
                 .price(hotelCreateDTO.price())
-                .imagesHotel(imageService.transformBase64(images))
+                .imagesHotel(hotelCreateDTO.imageBase64().stream().map(stringBase64 -> new Image(stringBase64)).collect(Collectors.toSet()))
                 .build();
         hotel = hotelRepository.save(hotel);
         return new HotelReadDTO(hotel);
@@ -70,16 +69,16 @@ public class HotelService {
     }
 
     @Transactional
-    public void update(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images) {
+    public void update(HotelUpdateDTO hotelUpdateDTO) {
         Enterprise enterprise = (Enterprise) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Hotel hotel = hotelRepository.findByEnterpriseId(enterprise.getId()).orElseThrow(() -> new EntityNotFoundException("Hotel not found"));
-        copyEntity(hotelUpdateDTO, images, hotel);
+        copyEntity(hotelUpdateDTO, hotel);
     }
 
-    private void copyEntity(HotelUpdateDTO hotelUpdateDTO, List<MultipartFile> images, Hotel hotel) {
+    private void copyEntity(HotelUpdateDTO hotelUpdateDTO, Hotel hotel) {
         for (Image image : hotel.getImagesHotel()) {
             imageRepository.delete(image);
         }
-        hotel.updateHotel(hotelUpdateDTO, imageService.transformBase64(images));
+        hotel.updateHotel(hotelUpdateDTO, hotelUpdateDTO.imageBase64().stream().map(stringBase64 -> new Image(stringBase64)).collect(Collectors.toSet()));
     }
 }
